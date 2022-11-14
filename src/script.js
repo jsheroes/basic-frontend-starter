@@ -1,23 +1,74 @@
-// TODO: Add some sample repositories as a static array
+const repoCardTemplate = document.querySelector("[data-repo-template]");
+const repoCardContainer = document.querySelector("[data-repo-cards-container]");
+const searchInput = document.querySelector("[data-search]");
+const loadingText = document.querySelector("[data-loading]")
+const searchButton = document.getElementById('search-repos-btn')
 
-function createRepositoryCard() {
-  // Implement string template HTML builder for repo card
+
+// form submission
+searchButton.addEventListener("click", async (event) => {
+  event.preventDefault()
+  const searchValue = searchInput.value;
+
+  if (!searchValue) {
+    alert("Please type something")
+    return;
+  }
+
+  clearRepos()
+  await fetchRepos(searchValue)
+
+});
+
+// fetch initial repos when clearing the input
+searchInput.addEventListener('input', async (event) => {
+  const searchValue = event.target.value;
+
+  if (!searchValue) {
+    clearRepos()
+    await fetchRepos()
+  }
+})
+
+function clearRepos() {
+  loadingText.classList.remove('hide')
+  repoCardContainer.textContent = null;
 }
 
-function renderRepositories() {
-  // Implement DOM manipulation function to add list items in the repo list
+function hideLoadingMessage() {
+  loadingText.classList.add('hide');
 }
 
-// Comment this out when you start working on the search functionality
-renderRepositories();
+function renderRepositories(repository) {
+  // get the content inside the template / card
+  const card = repoCardTemplate.content.cloneNode(true).children[0];
 
-function handleSearch() {
-  // Implement form submit event handler
+  const header = card.querySelector('[data-header]');
+  const description = card.querySelector('[data-description]');
+  const stars = card.querySelector('[data-stars]');
+  const forks = card.querySelector('[data-forks]');
+
+  header.textContent = repository.full_name;
+  description.textContent = repository.description;
+  stars.textContent = `Stars: ${repository.stargazers_count}`;
+  forks.textContent = `Forks: ${repository.forks}`;
+
+  repoCardContainer.append(card)
 }
 
-async function fetchRepositories() {
-  // Pass parameter to the search endpoint
-  return fetch("https://api.github.com/legacy/repos/search/<placeholder>")
-    .then((res) => res.json())
-    .then((res) => res.repositories);
+function fetchRepos(searchParam = '') {
+  const API_URL = `https://api.github.com/search/repositories${searchParam ? '?q=' + searchParam : '?q=stars:>10000'}`;
+
+  return fetch(API_URL)
+    .then((response) => response.json())
+    .then(data => {
+      hideLoadingMessage();
+
+      data.items.map((repo) => {
+        return renderRepositories(repo)
+      })
+    })
 }
+
+fetchRepos();
+

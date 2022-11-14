@@ -1,21 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JSHeroes Bootcamp</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Welcome to the JSHeroes Bootcamp!</h1>
-    </header>
-    <main>
-      <ul class="repo-list">
-        <!-- repo list -->
-      </ul>
-    </main>
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JSHeroes Bootcamp</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src='script.js' defer></script>
+</head>
+<body>
+<header>
+  <h1>Welcome to the JSHeroes Bootcamp!</h1>
+</header>
+<section class='search-wrapper'>
+  <form class="search-form">
+    <input class="input" type="search" placeholder="Search repos..." data-search>
+    <button class="button" type="submit" id="search-repos-btn">Search</button>
+  </form>
+</section>
+<main>
+
+  <p data-loading>loading...</p>
+  <ul class='repo-cards' data-repo-cards-container>
+    <template data-repo-template>
+      <li class="repo-card">
+        <span class="title" data-header></span>
+        <span class="description" data-description></span>
+        <section class="footer">
+          <p data-stars></p>
+          <p data-forks></p>
+        </section>
+      </li>
+    </template>
+  </ul>
+</main>
+</body>
 </html>
