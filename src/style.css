@@ -72,17 +72,21 @@ h6 {
   --color-accent: #0098ff;
   --color-accent-hover: #0b1b44;
 
+  --font-family-base: system-ui, sans-serif;
+  --font-family-display: "Ubuntu", sans-serif;
+
   --drop-shadow: 0 2px 8px 1px rgba(18, 18, 18, 0.3);
   --animation-fade: all 0.1s ease-out;
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-family-base);
   color: var(--color-text);
 }
 
 h1 {
   font-size: 1.67rem;
+  font-family: var(--font-family-display);
 }
 
 header {
@@ -141,6 +145,7 @@ header {
 .button {
   border: 0;
   font-size: 1.2rem;
+  font-family: var(--font-family-display);
   appearance: none;
   background: var(--color-accent);
   color: var(--color-background);
@@ -196,6 +201,7 @@ header {
 
 .title {
   display: block;
+  font-family: var(--font-family-display);
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
