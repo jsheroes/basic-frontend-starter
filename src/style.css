@@ -62,13 +62,6 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-/*
-  9. Create a root stacking context - optional
-  this example is useful for a React app that would render in a div with id root
-*/
-#root {
-  isolation: isolate;
-}
 
 /* color variables */
 :root {
