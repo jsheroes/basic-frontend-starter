@@ -72,11 +72,12 @@ h6 {
 
 /* color variables */
 :root {
+  --color-primary: #0b1b44;
   --color-background: #fff;
   --color-border: #bbb;
-  --color-text: #333;
-  --color-accent: #28a745;
-  --color-accent-hover: #22863a;
+  --color-text: #202022;
+  --color-accent: #0098ff;
+  --color-accent-hover: #0b1b44;
 
   --drop-shadow: 0 2px 8px 1px rgba(18, 18, 18, 0.3);
   --animation-fade: all 0.1s ease-out;
@@ -92,14 +93,32 @@ h1 {
 }
 
 header {
-  background: var(--color-text);
+  background: var(--color-primary);
   color: var(--color-background);
+  position: relative;
 }
 
 .content-wrapper {
   max-width: 75rem;
   margin-inline: auto;
   padding: 3rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.bear {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+@media (max-width: 1400px) {
+  .bear {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+  }
 }
 
 /* Search form component styles */
