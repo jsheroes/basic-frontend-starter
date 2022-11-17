@@ -31,13 +31,14 @@ searchInput.addEventListener('input', async (event) => {
 })
 
 function clearRepos() {
-  loadingText.classList.remove('hide')
+  // loadingText.classList.remove('hide')
   repoCardContainer.textContent = null;
 }
 
-function hideLoadingMessage() {
-  loadingText.classList.add('hide');
-}
+// we can commented these out, if we use :empty
+// function hideLoadingMessage() {
+//   loadingText.classList.add('hide');
+// }
 
 function renderRepositories(repository) {
   // get the content inside the template / card
@@ -62,7 +63,7 @@ function fetchRepos(searchParam = '') {
   return fetch(API_URL)
     .then((response) => response.json())
     .then(data => {
-      hideLoadingMessage();
+      // hideLoadingMessage();
 
       data.items.map((repo) => {
         return renderRepositories(repo)
