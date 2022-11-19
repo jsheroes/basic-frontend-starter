@@ -36,24 +36,58 @@ const repositories = [
   },
 ];
 
-function createRepositoryCard() {
+var formSearch = document.querySelector("form");
+
+var temp = document.querySelector("[data-template-card]");
+
+const repoList = document.querySelector("[data-repo-list]");
+
+function createRepositoryCard(repository) {
   // Implement string template HTML builder for repo card
+  const clone = temp.content.cloneNode("true");
+  const nameElement = clone.querySelector("[data-header]");
+  const paragraph = clone.querySelector("[data-paragraph]");
+  const stars = clone.querySelector("[data-stark]");
+  const forks = clone.querySelector("[data-forks]");
+
+  nameElement.textContent = repository.full_name;
+  paragraph.textContent = repository.description;
+  stars.textContent += repository.stargazers_count;
+  forks.textContent += repository.forks;
+
+  repoList.append(clone);
 }
 
-function renderRepositories() {
+function renderRepositories(repos) {
   // Implement DOM manipulation function to add list items in the repo list
+  repos.map((repository) => createRepositoryCard(repository));
 }
 
 // Comment this out when you start working on the search functionality
-renderRepositories();
+//renderRepositories();
+formSearch.addEventListener("submit", handleSearch);
 
-function handleSearch() {
+function handleSearch(event) {
   // Implement form submit event handler
+  event.preventDefault();
+  const data = new FormData(event.target);
+  const searchText = data.get("searchBar");
+  const query = searchText ? `q=${searchText}` : "q=stars:>10000";
+  fetchRepositories(query);
 }
 
-async function fetchRepositories() {
+async function fetchRepositories(query) {
   // Pass parameter to the search endpoint
-  return fetch("https://api.github.com/legacy/repos/search/<placeholder>")
+  return fetch(`https://api.github.com/search/repositories?${query}`, {
+    headers: {
+      Authorization: "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",
+    },
+  })
     .then((res) => res.json())
-    .then((res) => res.repositories);
+    .then((res) => {
+      var repositories = res.items;
+      renderRepositories(repositories);
+    });
 }
+
+fetchRepositories("q=stars:>10000");
